@@ -40,3 +40,6 @@
 .read-the-docs {
   color: #888;
 }
+li {
+  list-style:none;
+}

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import Tarea from './components/Tarea'
 
@@ -7,27 +7,58 @@ function App() {
   const tareasIniciales = [
     {title: "Limpiar codigo muerto"}, 
     {title: "Completar Readme"}, 
-    {title: "actualizar Linkedin"}]
+    {title: "Actualizar Linkedin"}]
 
   const [tarea, setTarea] = useState({});
   const [list, setList] = useState(tareasIniciales);
+  const [mostrarBoton, setMostrarBoton] = useState(false);
+  const [mostrarPopUp, setMostrarPopUp] = useState(false)
+
+
+  const botonAparece = () => {
+    setMostrarBoton(true)
+  };
+
+  const botonEsconde =() => {
+    setMostrarBoton(false)
+  }
+
+
+    
+
+
+
+  const handleReset = () => {
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+  };
 
 
   const handleSubmit = (e)=>{
     e.preventDefault();
     const title = e.target.tarea.value;
+    const nuevaTarea = {title};
+    if (title.length < 6) {
+      alert("La tarea debe contener 6 o mas caracteres.")
+    } else {
+      const confirmated = confirm(`¿Desea crear la siguiente tarea?:${nuevaTarea.title}`);
 
-    const nuevaTarea = {title}
-    const confirmated = confirm(`¿Desea crear la siguiente tarea?:${nuevaTarea}`);
+      if (confirmated){
+        setTarea(nuevaTarea);
+        setList([nuevaTarea, ...list]);
+        handleReset();
+        botonEsconde();
+        setMostrarPopUp(true);
+        setInterval(() => {setMostrarPopUp(false)}, 5000);
+      }
 
-    if (confirmated){
-      setTarea(nuevaTarea);
-      setList([...list, nuevaTarea]);
-      alert("Tarea creada");
     }
-
-    
   };
+
+
+
+
 
   const pintarTareas = () => {
     return list.map((tarea, i) =>
@@ -59,12 +90,13 @@ function App() {
 
   return (
     <>
+      {mostrarPopUp && <section><h2>OK! TAREA AÑADIDA</h2></section>}
       <section>
         <article>
           <form onSubmit={handleSubmit}>
             <label htmlFor="tarea">Introduce nueva Tarea</label>
-            <input type="text" name="tarea"/>
-            <button type="submit">ADD</button>
+            <input type="text" name="tarea" id="tarea" onChange={botonAparece}/>
+            {mostrarBoton && <button type="submit" id="sumarTarea">ADD</button>}
           </form>
         </article>
         <article>
