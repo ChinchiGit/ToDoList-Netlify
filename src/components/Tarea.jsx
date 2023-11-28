@@ -3,7 +3,7 @@ import React from 'react'
 function Tarea({title, quitarTarea}) {
   return (
     <li>
-        <h3>{title} </h3>
+        <h4>{title} </h4>
         <button onClick={quitarTarea}>BORRAR</button>
     </li>
   )

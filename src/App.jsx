@@ -50,7 +50,7 @@ function App() {
         handleReset();
         botonEsconde();
         setMostrarPopUp(true);
-        setInterval(() => {setMostrarPopUp(false)}, 5000);
+        setInterval(() => {setMostrarPopUp(false)}, 2000);
       }
 
     }
@@ -90,16 +90,17 @@ function App() {
 
   return (
     <>
-      {mostrarPopUp && <section><h2>OK! TAREA AÑADIDA</h2></section>}
-      <section>
-        <article>
-          <form onSubmit={handleSubmit}>
+      <h1>TO DO LIST</h1>
+      {mostrarPopUp && <section id="popup-content-box"><h2>OK! TAREA AÑADIDA</h2></section>}
+      <section id='controlContainer'>
+        <article id="formContainer">
+          <form onSubmit={handleSubmit} id="formTarea">
             <label htmlFor="tarea">Introduce nueva Tarea</label>
             <input type="text" name="tarea" id="tarea" onChange={botonAparece}/>
             {mostrarBoton && <button type="submit" id="sumarTarea">ADD</button>}
           </form>
         </article>
-        <article>
+        <article id="buttonContainer">
           <button onClick={resetTareas}>RESET</button>
           <button onClick={limpiarTareas}>BORRAR TODO</button>
         </article>
@@ -109,7 +110,6 @@ function App() {
           {pintarTareas()}
         </ul>
       </section>
-
     </>
   )
 }
